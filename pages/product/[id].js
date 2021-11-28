@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material';
 import axios from 'axios';
 
-import { getSingleProduct } from 'helpers/api';
+import {getSingleProduct, getSingleProductMock} from 'helpers/api';
 
 import { ProductForm } from 'components/ProductForm';
 import { Loader } from 'components/Loader';
@@ -27,8 +27,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const productId = context?.params?.id;
+  
   try {
-    const { data } = await axios.get(getSingleProduct(productId));
+    // using mock API because 'https://fakestoreapi.com' isn't stable
+    const { data } = await axios.get(getSingleProductMock(productId));
 
     if (!data) {
       return {

@@ -1,3 +1,5 @@
+import products from './products.json';
+
 export const priceSelectorList = ['Less than', 'Equal', 'Greater than'];
 
 export const priceSelectorValues = {
@@ -19,3 +21,5 @@ export const getLayoutTitle = (route = '') => {
   
   return 'Products Page'
 }
+
+export const getProduct = (id) => products.find(product => product.id == id);
