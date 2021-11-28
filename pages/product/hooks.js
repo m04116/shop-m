@@ -13,12 +13,15 @@ export const useSingleProduct = () => {
   } = useRouter();
 
   useEffect(() => {
-    if (!product) {
+    if (!product && id) {
       dispatch(productsActions.fetchSingleProduct(id));
     }
   }, [dispatch, id, product]);
+  
+  const isLoading = !product || !id;
 
   return {
     product,
+    isLoading
   };
 };
