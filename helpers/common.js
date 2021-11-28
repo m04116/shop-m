@@ -15,11 +15,13 @@ export const filterPriceCallback = {
 };
 
 export const getLayoutTitle = (route = '') => {
-  if (route.includes('product')) {
+  if (route.includes('all-products')) {
+    return 'Products Page'
+  } else if (route.includes('product')) {
     return 'Product Detail Page'
   }
   
-  return 'Products Page'
+  return 'Shop Management'
 }
 
 export const getProduct = (id) => products.find(product => product.id == id);
