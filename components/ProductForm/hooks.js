@@ -11,12 +11,14 @@ export const useProductForm = product => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { price, title, description } = product;
+  
   const {
     control,
     reset,
     handleSubmit,
     formState: { isDirty },
-  } = useForm();
+  } = useForm({ defaultValues: { price, title, description } });
 
   const toggleEditMode = useCallback(() => setIsEditMode(current => !current), [setIsEditMode]);
 
