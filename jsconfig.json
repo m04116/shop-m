@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "redux": ["./redux/*"],
+      "styles": ["./styles/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
