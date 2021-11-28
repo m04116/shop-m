@@ -1,10 +1,11 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
 import { headCells, columnWidth } from './tableStuff';
 import routesList from 'helpers/routesList';
-import { productsActions } from "bus/products/actions";
+import { productsActions } from 'bus/products/actions';
+import Image from 'next/image';
 
 const TableHeader = () => {
   return (
@@ -25,7 +26,7 @@ export const ProductsList = ({ productsList }) => {
   const router = useRouter();
 
   const redirectToDetail = id => () => {
-    dispatch(productsActions.setSingleProductById(id))
+    dispatch(productsActions.setSingleProductById(id));
     router.push(routesList.productDetail(id));
   };
 
@@ -37,7 +38,9 @@ export const ProductsList = ({ productsList }) => {
           {productsList.map(({ id, image, category, description, price }) => (
             <TableRow onClick={redirectToDetail(id)} hover sx={{ ':hover': { cursor: 'pointer' } }} key={id}>
               <TableCell>
-                <img src={image} width={40} alt="product image" />
+                <Box sx={{ width: 40, height: 70, position: 'relative' }}>
+                  <Image src={image} layout="fill" objectFit="contain" alt="product image" />
+                </Box>
               </TableCell>
               <TableCell>{category}</TableCell>
               <TableCell sx={{ maxWidth: 400 }}>{description}</TableCell>

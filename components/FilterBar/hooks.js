@@ -13,7 +13,7 @@ export const useFilterBar = () => {
 
   useEffect(
     () => dispatch(productsActions.setProductsFilter({ category: categoryWatch, priceSelector: priceSelectorWatch, price: priceWatch })),
-    [categoryWatch, priceSelectorWatch, priceWatch]
+    [categoryWatch, dispatch, priceSelectorWatch, priceWatch]
   );
 
   const resetValue = useCallback(name => () => setValue(name, ''), [setValue]);

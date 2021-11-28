@@ -32,7 +32,7 @@ export const useProductForm = product => {
       ...values,
     };
     dispatch(productsActions.updateProduct({ product: updatedProduct, successCallback }));
-  }, [dispatch]);
+  }, [dispatch, product, router]);
 
   return {
     isEditMode,

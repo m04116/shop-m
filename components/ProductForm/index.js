@@ -2,6 +2,7 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
 import { useProductForm } from './hooks';
+import Image from "next/image";
 
 const renderInput =
   ({ disabled, type = 'text', multiline = false }) =>
@@ -16,9 +17,9 @@ export const ProductForm = ({ product }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Grid container gap={10}>
-        <Box sx={{ width: 150, flexGrow: 1 }}>
-          <img src={image} height={120} alt="product-image" />
+      <Grid container gap={10} height={100}>
+        <Box sx={{ width: 150, flexGrow: 1, position: 'relative' }}>
+          <Image src={image} layout="fill" objectFit="contain" alt="product-image" />
         </Box>
         <Box display="flex" alignItems="center" sx={{ width: 560 }}>
           <Typography variant="h5" sx={{ mr: 3 }}>
@@ -27,7 +28,7 @@ export const ProductForm = ({ product }) => {
           <Controller name="price" defaultValue={price} control={control} render={renderInput({ disabled: !isEditMode, type: 'number' })} />
         </Box>
       </Grid>
-      <Grid container mt={12} pl={8} gap={4}>
+      <Grid container mt={10} pl={8} gap={4}>
         <Typography variant="h5" sx={{ width: 200, textAlign: 'right' }}>
           Title:
         </Typography>
