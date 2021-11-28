@@ -1,6 +1,6 @@
 import { Paper } from '@mui/material';
 
-import { useSingleProduct } from './hooks';
+import { useSingleProduct } from 'commonHooks/productsHooks';
 
 import { ProductForm } from 'components/ProductForm';
 import { Loader } from 'components/Loader';
