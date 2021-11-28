@@ -1,14 +1,14 @@
 import { Paper } from '@mui/material';
 
-import { useSingleProduct } from './hooks';
+import { useSingleProduct } from 'commonHooks/productsHooks';
 
 import { ProductForm } from 'components/ProductForm';
 import { Loader } from 'components/Loader';
 
 export default function ProductDetail() {
-  const { product } = useSingleProduct();
+  const { product, isLoading } = useSingleProduct();
   
-  if (!product) {
+  if (isLoading) {
     return <Loader />;
   }
 
