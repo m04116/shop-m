@@ -1,4 +1,4 @@
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
@@ -26,8 +26,8 @@ export const ProductsList = ({ productsList }) => {
   const router = useRouter();
 
   const redirectToDetail = id => () => {
-    dispatch(productsActions.setSingleProductById(id));
-    router.push(routesList.productDetail(id));
+    const successCallback = () => router.push(routesList.productDetail(id));
+    dispatch(productsActions.setSingleProductById({ id, successCallback }));
   };
 
   return (

@@ -67,11 +67,13 @@ function* fetchSingleProduct({ payload: productId }) {
   }
 }
 
-function* setSingleProductById({ payload: productId }) {
+function* setSingleProductById({ payload }) {
+  const { id: productId, successCallback } = payload;
   const products = yield select(getFetchedProducts);
   const singleProduct = products.find(product => product.id == productId);
 
   yield put(productsActions.setSingleProduct(singleProduct));
+  yield call(successCallback);
 }
 
 function* updateProduct({ payload }) {
@@ -80,7 +82,7 @@ function* updateProduct({ payload }) {
     const { status } = yield call([axios, 'put'], getSingleProduct(product.id), product);
 
     if (status === 200) {
-      successCallback();
+      yield call(successCallback);
     }
   } catch (e) {
     console.error('--update-product--', e);
