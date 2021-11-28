@@ -16,7 +16,7 @@ export const useSingleProduct = () => {
     if (!product) {
       dispatch(productsActions.fetchSingleProduct(id));
     }
-  }, [id, product]);
+  }, [dispatch, id, product]);
 
   return {
     product,
