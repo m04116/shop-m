@@ -43,5 +43,8 @@ export async function getStaticProps(context) {
     };
   } catch (e) {
     console.error('--SSR-fetch-product--', e);
+    return {
+      notFound: true,
+    };
   }
 }
