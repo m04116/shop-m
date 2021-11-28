@@ -10,9 +10,9 @@ import styles from 'styles/Home.module.scss';
 
 export default function Products() {
   useFetchProducts();
-  const { categories, products } = useProducts();
+  const { categories, products, isLoading } = useProducts();
   
-  if (!categories.length || !products.length) {
+  if (isLoading) {
     return <Loader />;
   }
 

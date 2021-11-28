@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { productsActions } from 'bus/products/actions';
-import {getRenderedProducts, getCategories} from 'bus/products/selectors';
+import {getRenderedProducts, getCategories, getFetchedProducts} from 'bus/products/selectors';
 
 export const useFetchProducts = () => {
   const dispatch = useDispatch();
@@ -13,12 +13,15 @@ export const useFetchProducts = () => {
 };
 
 export const useProducts = () => {
-  const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const products = useSelector(getRenderedProducts);
+  const fetchedProducts = useSelector(getFetchedProducts);
+  
+  const isLoading = !categories.length || !fetchedProducts.length;
   
   return {
     categories,
-    products
+    products,
+    isLoading
   }
 };
