@@ -1,12 +1,13 @@
 import { Paper } from '@mui/material';
-import axios from 'axios';
 
-import {getSingleProduct, getSingleProductMock} from 'helpers/api';
+import { useSingleProduct } from './hooks';
 
 import { ProductForm } from 'components/ProductForm';
 import { Loader } from 'components/Loader';
 
-export default function ProductDetail({ product }) {
+export default function ProductDetail() {
+  const { product } = useSingleProduct();
+  
   if (!product) {
     return <Loader />;
   }
@@ -18,33 +19,3 @@ export default function ProductDetail({ product }) {
   );
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: ['/product/id'],
-    fallback: true,
-  };
-}
-
-export async function getStaticProps(context) {
-  const productId = context?.params?.id;
-  
-  try {
-    // using mock API because 'https://fakestoreapi.com' isn't stable
-    const { data } = await axios.get(getSingleProductMock(productId));
-
-    if (!data) {
-      return {
-        notFound: true,
-      };
-    }
-
-    return {
-      props: { product: data },
-    };
-  } catch (e) {
-    console.error('--SSR-fetch-product--', e);
-    return {
-      notFound: true,
-    };
-  }
-}
