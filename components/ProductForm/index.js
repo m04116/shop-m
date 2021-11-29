@@ -1,8 +1,9 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 import { useProductForm } from './hooks';
-import Image from "next/image";
+import Image from 'next/image';
 
 const renderInput =
   ({ disabled, type = 'text', multiline = false }) =>
@@ -60,4 +61,8 @@ export const ProductForm = ({ product }) => {
       </Grid>
     </form>
   );
+};
+
+ProductForm.propTypes = {
+  product: PropTypes.object.isRequired,
 };

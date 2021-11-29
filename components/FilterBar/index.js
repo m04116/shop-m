@@ -1,6 +1,7 @@
 import { IconButton, FormControl, Grid, InputLabel, MenuItem, Select, OutlinedInput } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 import { useFilterBar } from './hooks';
 import { priceSelectorList, priceSelectorValues } from 'helpers/common';
@@ -21,6 +22,13 @@ const CustomSelect = ({ name, itemsList, field, handleClick }) => (
   </Grid>
 );
 
+CustomSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  itemsList: PropTypes.array.isRequired,
+  field: PropTypes.object.isRequired,
+  handleClick: PropTypes.func.isRequired
+}
+
 const CustomInput = ({ name, field, handleClick }) => (
   <Grid container gap={1}>
     <InputLabel id="price-label">{name}</InputLabel>
@@ -31,8 +39,14 @@ const CustomInput = ({ name, field, handleClick }) => (
   </Grid>
 );
 
+CustomInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
+
 export const FilterBar = ({ categories }) => {
-  const { control, resetValue } = useFilterBar(categories[0]);
+  const { control, resetValue } = useFilterBar();
 
   const renderSelect = (name, itemsList) => ({ field }) => <CustomSelect name={name} itemsList={itemsList} field={field} handleClick={resetValue(field.name)} />;
   const renderInput = ({ field }) => <CustomInput name="Price" field={field} handleClick={resetValue('price')} />;

@@ -1,4 +1,5 @@
 import { AppBar, Toolbar, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
 export const Layout = ({ title, children }) => (
   <>
@@ -12,3 +13,8 @@ export const Layout = ({ title, children }) => (
     {children}
   </>
 );
+
+Layout.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
