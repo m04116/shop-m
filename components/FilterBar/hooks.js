@@ -1,12 +1,19 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { productsActions } from 'bus/products/actions';
 
 export const useFilterBar = () => {
+  const savedFilterParameters = useRef(JSON.parse(localStorage.getItem('filterParameters')));
   const dispatch = useDispatch();
-  const { control, watch, register, setValue } = useForm({ defaultValues: { category: '', priceSelector: '', price: '' } });
+  const { control, watch, setValue } = useForm({
+    defaultValues: {
+      category: savedFilterParameters.current?.category ?? '',
+      priceSelector: savedFilterParameters.current?.priceSelector ?? '',
+      price: savedFilterParameters.current?.price ?? '',
+    },
+  });
   const categoryWatch = watch('category');
   const priceSelectorWatch = watch('priceSelector');
   const priceWatch = watch('price');
@@ -16,11 +23,16 @@ export const useFilterBar = () => {
     [categoryWatch, dispatch, priceSelectorWatch, priceWatch]
   );
 
-  const resetValue = useCallback(name => () => setValue(name, ''), [setValue]);
+  const resetValue = useCallback(name => () => {
+    setValue(name, '');
+    localStorage.setItem('filterParameters', JSON.stringify({
+      ...savedFilterParameters.current,
+      [name]: ''
+    }));
+  }, [setValue]);
 
   return {
     control,
     resetValue,
   };
 };
-

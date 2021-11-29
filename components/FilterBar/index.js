@@ -4,23 +4,34 @@ import { Controller } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
 import { useFilterBar } from './hooks';
-import { priceSelectorList, priceSelectorValues } from 'helpers/common';
+import { priceSelectorList } from 'helpers/common';
 
-const CustomSelect = ({ name, itemsList, field, handleClick }) => (
-  <Grid container gap={1}>
-    <InputLabel id={`${name}-select-label`}>{name}</InputLabel>
-    <Select labelId={`${name}-select-label`} id={`${name}-select`} label={name} sx={{ flexGrow: 1, textTransform: 'capitalize' }} {...field}>
-      {itemsList.map(item => (
-        <MenuItem value={item} sx={{ textTransform: 'capitalize' }} key={item}>
-          {item}
-        </MenuItem>
-      ))}
-    </Select>
-    <IconButton sx={{ width: 58 }} onClick={handleClick} color="info" disabled={!Boolean(field.value)}>
-      <HighlightOffIcon />
-    </IconButton>
-  </Grid>
-);
+const CustomSelect = ({ name, itemsList, field, handleClick }) => {
+  // TODO: move storage persistence to separate function
+  const savedFilterParameters = JSON.parse(localStorage.getItem('filterParameters'));
+  const handleChange = (e, value) => {
+    localStorage.setItem('filterParameters', JSON.stringify({
+      ...savedFilterParameters,
+      [field.name]: value.props.value
+    }));
+    field.onChange(e, value)
+  }
+  return (
+    <Grid container gap={1}>
+      <InputLabel id={`${name}-select-label`}>{name}</InputLabel>
+      <Select  labelId={`${name}-select-label`} id={`${name}-select`} label={name} sx={{ flexGrow: 1, textTransform: 'capitalize' }} {...field} onChange={handleChange}>
+        {itemsList.map(item => (
+          <MenuItem value={item} sx={{ textTransform: 'capitalize' }} key={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </Select>
+      <IconButton sx={{ width: 58 }} onClick={handleClick} color="info" disabled={!Boolean(field.value)}>
+        <HighlightOffIcon />
+      </IconButton>
+    </Grid>
+  )
+};
 
 CustomSelect.propTypes = {
   name: PropTypes.string.isRequired,
@@ -29,15 +40,25 @@ CustomSelect.propTypes = {
   handleClick: PropTypes.func.isRequired
 }
 
-const CustomInput = ({ name, field, handleClick }) => (
-  <Grid container gap={1}>
-    <InputLabel id="price-label">{name}</InputLabel>
-    <OutlinedInput id="component-outlined" label={name} type="number" {...field} />
-    <IconButton sx={{ width: 58 }} onClick={handleClick} color="info" disabled={!Boolean(field.value)}>
-      <HighlightOffIcon />
-    </IconButton>
-  </Grid>
-);
+const CustomInput = ({ name, field, handleClick }) => {
+  const savedFilterParameters = JSON.parse(localStorage.getItem('filterParameters'));
+  const handleChange = (e) => {
+    localStorage.setItem('filterParameters', JSON.stringify({
+      ...savedFilterParameters,
+      [field.name]: e.target.value
+    }));
+    field.onChange(e)
+  }
+  return (
+    <Grid container gap={1}>
+      <InputLabel id="price-label">{name}</InputLabel>
+      <OutlinedInput id="component-outlined" label={name} type="number" {...field} onChange={handleChange} />
+      <IconButton sx={{ width: 58 }} onClick={handleClick} color="info" disabled={!Boolean(field.value)}>
+        <HighlightOffIcon />
+      </IconButton>
+    </Grid>
+  )
+};
 
 CustomInput.propTypes = {
   name: PropTypes.string.isRequired,
