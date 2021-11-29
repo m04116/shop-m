@@ -1,11 +1,12 @@
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import Image from 'next/image';
+import PropTypes from 'prop-types';
 
 import { headCells, columnWidth } from './tableStuff';
 import routesList from 'helpers/routesList';
 import { productsActions } from 'bus/products/actions';
-import Image from 'next/image';
 
 const TableHeader = () => {
   return (
@@ -24,7 +25,7 @@ const TableHeader = () => {
 export const ProductsList = ({ productsList }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  
   const redirectToDetail = id => () => {
     const successCallback = () => router.push(routesList.productDetail(id));
     dispatch(productsActions.setSingleProductById({ id, successCallback }));
@@ -51,4 +52,8 @@ export const ProductsList = ({ productsList }) => {
       </Table>
     </TableContainer>
   );
+};
+
+ProductsList.propTypes = {
+  productsList: PropTypes.array,
 };
